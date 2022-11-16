@@ -237,7 +237,7 @@ def subject_level_pipeline(input_df):
     # 1. Fill constant columns
     input_df = fill_within_subject_constant_columns(input_df)
 
-    # 2. Prepare and fit mixed model
+    # 2. Prepare and fit mixed models
     mixed_model = partial(gbp_pipeline, params={"std_dev": True,
                                                 "optimizer_cov": "gradient_descent", "lr_cov": 0.1,
                                                 "use_nesterov_acc": True,
@@ -257,7 +257,7 @@ def subject_level_pipeline(input_df):
                                           vent_wb_features + age_dx_features,
                                           ['WholeBrain'] + age_dx_features])
 
-    # run KNN within subject first to all cols except DX_num and then to DX_num with k=1
+    # 3. Run KNN within subject first to all cols except DX_num and then to DX_num with k=1
     input_df = input_df.groupby('RID_HASH').apply(
         partial(withinsubjectknn, n_neigh=2, ignore_cols=['DX_num'], drop_cols=['RID_HASH']))
 
