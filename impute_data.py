@@ -174,7 +174,7 @@ class GPBEstimator:
 
 
 def fit_gpb(input_df, feature, X_features, params=None):
-    """drop rows that we cannot fit and """
+    """drop rows that we cannot fit, build and fit mixed model"""
 
     fitting_df = input_df.dropna(subset=[feature] + X_features)
     groups = fitting_df['RID_HASH']
