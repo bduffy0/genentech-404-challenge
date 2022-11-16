@@ -17,12 +17,10 @@ The hyperimpute imputation package, where we fit different models for different 
 hashing the subject ID did give a boost in performance (~0.065 on the public LB, 0.002 improvement on private LB). Using a hashing dimensionality of 64 seemed to work well,
  even if there were no clashes using a lower dimensionality
 
- Mixed models are designed for correlated data, so instead of just running knn within subjects, using a mixed model (random intercept) as a first step enables us to borrow information across subjects in the situation where we have some data for that subject/feature should be a better strategy than any within subject model.
- For this we needed to select feature subsets to fit, so this was a mostly manual hyperparameter search. Given the pattern of missing data, sensible combinations seemed to be predicting the neuroimaging features from the age + wholebrain + DX_group, or failing that
-just age + DX_group. Then predicting the ventricles and whole brain features from the other neuro features + age + DX_group. Fitting the mixed models to the cognitive features (using neuroimaging as predictors) also
- gave a slight improvement.
+ Mixed models are designed for correlated data, so instead of just running knn within subjects, using a mixed model (random intercept) as a first step enables us to borrow information across subjects in the situation where we have some data for that subject and feature. This should be a better strategy than KNN if the data is available. For this, we needed to select feature subsets to fit, so this was a mostly manual hyperparameter search. Given the pattern of missing data, sensible combinations seemed to be predicting the neuroimaging features from the age + wholebrain + DX_group, or failing that
+just age + DX_group. Then predicting the ventricles and whole brain features from the other neuro features + age + DX_group. Fitting mixed models to predict the cognitive features (using neuroimaging features as predictors) also gave a slight improvement.
 
- Finally, there was a slight improvement by recognising that KNN where k = 2 was optimal for most features but setting to k = 1 seemed to work better for DX_group.
+ Finally, there was a slight improvement by recognising that KNN where k = 2 was optimal for most features but setting to k = 1 seemed to work much better for DX_group.
 
 ### Final Submission Details:
 1. Fill in missing age from the time-point information.
